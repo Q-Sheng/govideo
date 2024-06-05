@@ -30,5 +30,16 @@ func InitConfig(ConfigInfo *global.ConfigInformation) {
 	if err != nil {
 		log.Println("服务信息匹配出错，errmsg:", err)
 	}
+	err = inifile.Section("redis").MapTo(&ConfigInfo.Redisconfig)
+	if err != nil {
+		log.Println("redis信息匹配出错，errmsg:", err)
+	}
+
+	// 检查host 是smtp是否拼接成string
+	err = inifile.Section("email").MapTo(&ConfigInfo.Emailconfig)
+	if err != nil {
+		log.Println("email信息匹配出错，errmsg:", err)
+	}
+
 	fmt.Println(*ConfigInfo)
 }

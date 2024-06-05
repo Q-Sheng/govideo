@@ -4,6 +4,7 @@ import (
 	"service/global"
 	"service/initialize/config"
 	mygorm "service/initialize/gorm"
+	"service/initialize/redis"
 	"service/initialize/router"
 )
 
@@ -21,7 +22,11 @@ func InitServe() {
 	config.InitConfig(global.ConfigInfo)
 
 	// 初始化数据库,初始化配置信息需要在前
-	global.Db = mygorm.InitGorm(global.ConfigInfo)
+	//todo 检查传送地址是否正确
+	global.Db = mygorm.InitGorm(&global.ConfigInfo.Dbconfig)
+
+	//初始化Redis
+	global.Rdb = redis.InitRedis(&global.ConfigInfo.Redisconfig)
 
 	// 初始化Router，并返回做作为全局，并后续启动
 	global.Router = router.InitRouter()

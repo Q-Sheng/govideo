@@ -3,13 +3,15 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"service/middlewires"
 	myrouter "service/router"
 )
 
 func InitRouter() *gin.Engine {
 	router := gin.Default()
 
-	//todo 使用跨域
+	// 使用跨域
+	router.Use(middlewires.Cors())
 
 	// 路由分组
 	PublicGroup := router.Group("public")
@@ -22,10 +24,11 @@ func InitRouter() *gin.Engine {
 
 	// 声明路由变量
 
-	PrivateGroup := router.Group("private")
+	PrivateGroup := router.Group("")
 	{
 		// 为路由组添加路由
 		myrouter.RouterGroupApp.InitLoginRouter(PrivateGroup)
+		myrouter.RouterGroupApp.InitUserRouter(PrivateGroup)
 
 	}
 

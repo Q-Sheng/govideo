@@ -10,6 +10,19 @@ type User struct {
 	Password string `json:"password" gorm:"column:password"`
 	Salt     string `json:"salt" gorm:"column:salt"`
 	Gender   int8   `json:"gender" gorm:"column:gender"`
+	Email    string `json:"email" gorm:"column:email"`
 
-	LiveInfo string `json:"liveInfo" gorm:"foreignKey:Uid"`
+	Live_info string `json:"live_info" gorm:"column:live_info"`
+}
+
+type RegisterUser struct {
+	gorm.Model
+	Username string `json:"username" binding:"required"`
+	Password string `json:"password" binding:"required"`
+	//Salt     string `json:"salt" gorm:"column:salt"`
+	//Gender   int8   `json:"gender" gorm:"column:gender"`
+	Email   string `json:"email" binding:"required,email"`
+	VerCode string `json:"verificationCode" binding:"required"`
+
+	//Live_info string `json:"live_info" gorm:"column:live_info"`
 }
